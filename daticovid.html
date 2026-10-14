@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>COVID-19 Italia</title>
+  <style>
+    table { border-collapse: collapse; }
+    th, td { border: 1px solid #999; padding: 4px 8px; text-align: right; }
+  </style>
+</head>
+<body>
+
+<h1>COVID-19 Italia - dati per data</h1>
+
+<table id="tabella">
+  <tr>
+    <th>Data</th>
+    <th>Nuovi positivi</th>
+    <th>Totale positivi</th>
+    <th>Dimessi guariti</th>
+    <th>Deceduti</th>
+    <th>Totale casi</th>
+    <th>Tamponi</th>
+  </tr>
+</table>
+
+<script>
+  var link = "https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-andamento-nazionale.json";
+
+  fetch(link)
+    .then(function (risposta) { return risposta.json(); })
+    .then(function (dati) {
+      var tabella = document.getElementById("tabella");
+
+      for (var i = 0; i < dati.length; i++) {
+        var giorno = dati[i];
+
+        var riga = tabella.insertRow();
+        riga.insertCell().textContent = giorno.data.substring(0, 10);
+        riga.insertCell().textContent = giorno.nuovi_positivi;
+        riga.insertCell().textContent = giorno.totale_positivi;
+        riga.insertCell().textContent = giorno.dimessi_guariti;
+        riga.insertCell().textContent = giorno.deceduti;
+        riga.insertCell().textContent = giorno.totale_casi;
+        riga.insertCell().textContent = giorno.tamponi;
+      }
+    });
+</script>
+
+</body>
+</html>
