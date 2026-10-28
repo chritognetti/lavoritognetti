@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Utenti della scuola</title>
+</head>
+<body>
+  <h1>Utenti della scuola</h1>
+  <table border="1" id="tabella">
+    <tr><th>Nome</th><th>Cognome</th></tr>
+  </table>
+
+  <script>
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "scuola.xml", true);
+
+    xhr.onload = function () {
+      const utenti = xhr.responseXML.getElementsByTagName("utente");
+      let righe = "";
+
+      for (let i = 0; i < utenti.length; i++) {
+        const nome = utenti[i].getElementsByTagName("nome")[0].textContent;
+        const cognome = utenti[i].getElementsByTagName("cognome")[0].textContent;
+        righe += "<tr><td>" + nome + "</td><td>" + cognome + "</td></tr>";
+      }
+
+      document.getElementById("tabella").innerHTML += righe;
+    };
+
+    xhr.send();
+  </script>
+</body>
+</html>
